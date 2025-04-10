@@ -1,28 +1,33 @@
 "use client";
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {DragDropProvider} from '@dnd-kit/react';
 import {move} from '@dnd-kit/helpers';
 import {Column} from "@/app/kanban/components/Column/Column";
 import {Item} from "@/app/kanban/components/Item/Item";
-import {Input} from "@/app/kanban/components/Input/Input";
 
 
 export default function Kanban() {
-    const [items, setItems] = useState({
-        A: [],
-        B: [],
-        C: [],
+    const [items, setItems] = useState([]);
+    const [columns, setColumns] = useState({
+        title: ['todo',
+            'in_progress',
+            'done',]
     });
 
-    const addItemToGroup = (group: "A" | "B" | "C", newItem: string) => {
-        setItems(prev => ({...prev, [group]: [...prev[group], newItem]}));
-    }
+    useEffect(() => {
+        fetch("http://127.0.0.1:8000/kanbandata/projects/")
+            .then(response => response.json())
+            .then(data => setItems(data));
+    }, []);
 
-    const addItemToA = (title: string) => {
-        addItemToGroup("A", title);
-    }
+    useEffect(() => {
+        fetch("http://127.0.0.1:8000/kanbandata/tasks/")
+            .then(response => response.json())
+            .then(data => setColumns(data))
 
+    }, []);
+    console.log(columns);
     return (
         <DragDropProvider
             onDragOver={(event) => {
@@ -32,11 +37,11 @@ export default function Kanban() {
 
             <div className="flex justify-center">Задания</div>
             <div className="flex justify-center gap-10 mt-10 Root">
-                <Input onSubmit={addItemToA}/>
-                {Object.entries(items).map(([column, items]) => (
-                    <Column key={column} id={column}>
-                        {items.map((id, index) => (
-                            <Item key={id} id={id} index={index} column={column}/>
+                {Object.keys(columns).map((title) => (
+                    <Column key={title.length} id={title}>
+                        {columns.title}
+                        {items.map((review) => (
+                            <Item key={review.id} id={review.title} index={review.length} column={columns.length}/>
                         ))}
                     </Column>
                 ))}
