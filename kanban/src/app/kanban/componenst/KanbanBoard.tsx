@@ -100,7 +100,7 @@ export default function KanbanBoard() {
                         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex items-center gap-1"
                     >
                         <PlusIcon className="h-5 w-5" />
-                        Добавить
+                        ADD
                     </button>
                 </div>
             </div>
