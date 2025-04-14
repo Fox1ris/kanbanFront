@@ -3,17 +3,16 @@
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import KanbanItem from './KanbanItem';
-import { Task } from './KanbanBoard';
+import { Project } from './KanbanBoard';
 
 type KanbanColumnProps = {
     id: string;
     title: string;
-    tasks: Task[];
+    projects: Project[];
     isEmpty: boolean;
-    project: number;
 };
 
-export default function KanbanColumn({ id, title, tasks, isEmpty }: KanbanColumnProps) {
+export default function KanbanColumn({ id, title, projects}: KanbanColumnProps) {
     const { setNodeRef, isOver } = useDroppable({
         id,
         data: {
@@ -24,21 +23,19 @@ export default function KanbanColumn({ id, title, tasks, isEmpty }: KanbanColumn
     return (
         <div
             ref={setNodeRef}
-            className={`bg-gray-100 rounded-lg p-4 min-h-[200px] ${
+            className={`bg-gray-100 rounded-lg p-4 min-h-[200px] w-[800px] ${
                 isOver ? 'ring-2 ring-blue-500' : ''
             }`}
         >
             <h2 className="text-xl font-semibold mb-4">{title}</h2>
-            {isEmpty ? (
-                <div className="text-gray-500 text-center py-4"></div>
-            ) : (
+            {(
                 <SortableContext
-                    items={tasks.map((task) => task.id)}
+                    items={projects.map((project) => project.id)}
                     strategy={verticalListSortingStrategy}
                 >
-                    <div className="space-y-3">
-                        {tasks.map((task) => (
-                            <KanbanItem key={task.id} id={task.id} title={task.title} project={task.project} />
+                    <div className="flex flex-wrap gap-[30px]">
+                        {projects.map((project) => (
+                            <KanbanItem key={project.id} id={project.id} title={project.title} status={project.status} />
                         ))}
                     </div>
                 </SortableContext>

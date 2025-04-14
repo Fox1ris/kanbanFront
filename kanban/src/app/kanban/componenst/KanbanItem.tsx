@@ -6,9 +6,10 @@ import { CSS } from '@dnd-kit/utilities';
 type KanbanItemProps = {
     id: string;
     title: string;
+    project: number;
 };
 
-export default function KanbanItem({ id, title }: KanbanItemProps) {
+export default function KanbanItem({ id, title, project }: KanbanItemProps) {
     const {
         attributes,
         listeners,
@@ -16,7 +17,7 @@ export default function KanbanItem({ id, title }: KanbanItemProps) {
         transform,
         transition,
         isDragging,
-    } = useSortable({ id });
+    } = useSortable({ id, });
 
     const style = {
         transform: CSS.Transform.toString(transform),

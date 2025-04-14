@@ -12,12 +12,11 @@ type Task = {
     title: string;
     description: string;
     status: 'todo' | 'in_progress' | 'done';
-    project: number;
 };
 
 export default function KanbanBoard() {
     const [tasks, setTasks] = useState([]);
-
+    const project = 7;
     const api = axios.create({
         baseURL: "http://127.0.0.1:8000/kanbandata/",  // Без слеша в конце!
     });
@@ -26,8 +25,6 @@ export default function KanbanBoard() {
             .then(response => response.json())
             .then(data => setTasks(data));
     }, []);
-
-    console.log(tasks);
 
     const [newTaskTitle, setNewTaskTitle] = useState('');
 
@@ -59,8 +56,6 @@ export default function KanbanBoard() {
 
             return;
         }
-
-        // Обычное перемещение между задачами
         const overTask = tasks.find((task) => task.id === over.id);
 
 
@@ -90,7 +85,7 @@ export default function KanbanBoard() {
     const addTask = () => {
         if (!newTaskTitle.trim()) return;
 
-        api.post('tasks/', {
+        api.post(`tasks/`, {
             project: 1,
             title: newTaskTitle,
             description: "newTask.description",
@@ -104,9 +99,6 @@ export default function KanbanBoard() {
             title: newTaskTitle,
             status: 'todo',
         };
-
-
-
 
         setTasks([...tasks, newTask]);
         setNewTaskTitle('');
@@ -141,18 +133,21 @@ export default function KanbanBoard() {
                         title="To Do"
                         tasks={getTasksByStatus('todo')}
                         isEmpty={getTasksByStatus('todo').length === 0}
+                        project={project}
                     />
                     <KanbanColumn
                         id="in_progress"
                         title="In Progress"
                         tasks={getTasksByStatus('in_progress')}
                         isEmpty={getTasksByStatus('in_progress').length === 0}
+                        project={project}
                     />
                     <KanbanColumn
                         id="done"
                         title="Done"
                         tasks={getTasksByStatus('done')}
                         isEmpty={getTasksByStatus('done').length === 0}
+                        project={project}
                     />
                 </div>
             </DndContext>
