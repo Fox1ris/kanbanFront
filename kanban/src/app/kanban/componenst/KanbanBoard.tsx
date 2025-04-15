@@ -20,9 +20,9 @@ type Task = {
 };
 
 export default function KanbanBoard() {
-
     const [tasks, setTasks] = useState([]);
-
+    const [newTaskTitle, setNewTaskTitle] = useState('');
+    //const [newTaskDescription, setNewTaskDescription] = useState(''); //Надо сделать добавление описания задачи
     const projectID = Number(localStorage.getItem("project"));
 
     const api = axios.create({
@@ -34,15 +34,10 @@ export default function KanbanBoard() {
             .then(data => setTasks(data));
     }, []);
 
-    const [newTaskTitle, setNewTaskTitle] = useState('');
-    const [newTaskDescription, setNewTaskDescription] = useState('');
-
     const getTasksByStatus = (status: Task['status']) => {
         // @ts-ignore
         return tasks.filter((task) => task.status === status);
     };
-
-
 
     const handleDragEnd = (event: DragEndEvent) => {
         const {active, over} = event;
@@ -64,11 +59,10 @@ export default function KanbanBoard() {
                 })
                     .then(response => console.log("Статус успешно!", response))
                     .catch(error => console.error("Ошибка:", error.response?.data || error.message));
-
             return;
         }
-        const overTask = tasks.find((task) => task.id === over.id);
 
+        const overTask = tasks.find((task) => task.id === over.id);
 
         if (!overTask) return;
 
@@ -109,7 +103,7 @@ export default function KanbanBoard() {
             id: tasks.at(-1).id +1,
             title: newTaskTitle,
             status: 'todo',
-            description: newTaskDescription,
+            //description: newTaskDescription,
             project: projectID,
         };
 

@@ -10,6 +10,7 @@ interface DropdownProps {
 export default function DropdownMenu ({ selected, onSelect, defaultLabel = 'Select an option' }: DropdownProps)  {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleSelect = (selected: string) => {

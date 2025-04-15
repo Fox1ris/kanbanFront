@@ -33,7 +33,10 @@ export default function KanbanItem({ id, title }: KanbanItemProps) {
             {...listeners}
             className="bg-white p-3 rounded shadow cursor-move hover:shadow-md transition-shadow text-pink-600"
         >
-            {title}
+            <div className="flex justify-center">
+                {title}
+            </div>
+
         </div>
     );
 }

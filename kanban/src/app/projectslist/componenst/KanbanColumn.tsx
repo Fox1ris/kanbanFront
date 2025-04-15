@@ -22,7 +22,7 @@ export default function KanbanColumn({ id, title, projects}: KanbanColumnProps) 
     return (
         <div
             ref={setNodeRef}
-            className={`bg-gray-100 rounded-lg p-4 min-h-[200px] w-[800px] ${
+            className={`bg-gray-100 rounded-lg p-4 min-h-[200px]  ${
                 isOver ? 'ring-2 ring-blue-500' : ''
             }`}
         >
@@ -34,7 +34,7 @@ export default function KanbanColumn({ id, title, projects}: KanbanColumnProps) 
                 >
                     <div className="flex flex-wrap gap-[30px]">
                         {projects.map((project) => (
-                            <KanbanItem key={project.id} id={project.id} title={project.title} status={project.status} />
+                            <KanbanItem key={project.id} id={project.id} title={project.title} status={project.status} description={project.description} />
                         ))}
                     </div>
                 </SortableContext>

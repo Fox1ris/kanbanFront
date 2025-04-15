@@ -1,8 +1,6 @@
 'use client';
 
 import {useEffect, useState} from 'react';
-import {DndContext, DragEndEvent, closestCorners} from '@dnd-kit/core';
-import {SortableContext, arrayMove} from '@dnd-kit/sortable';
 import KanbanColumn from './KanbanColumn';
 import {PlusIcon} from '@heroicons/react/24/outline';
 import axios from "axios";
@@ -16,18 +14,17 @@ type Project = {
 
 export default function KanbanBoard() {
     const [projects, setProjects] = useState([]);
+    const [newProjectTitle, setNewProjectTitle] = useState('');
+
     const api = axios.create({
         baseURL: "http://127.0.0.1:8000/kanbandata/",  // Без слеша в конце!
     });
+
     useEffect(() => {
         fetch("http://127.0.0.1:8000/kanbandata/projects/")
             .then(response => response.json())
             .then(data => setProjects(data));
-    }, []);
-
-    console.log(projects);
-
-    const [newProjectTitle, setNewProjectTitle] = useState('');
+    },[]);
 
     const addProject = () => {
         if (!newProjectTitle.trim()) return;
@@ -52,7 +49,7 @@ export default function KanbanBoard() {
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold">Канбан Доска</h1>
+                <h1 className="text-2xl font-bold italic">Проекты</h1>
                 <div className="flex gap-2">
                     <input
                         type="text"
@@ -72,14 +69,13 @@ export default function KanbanBoard() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-black">
+            <div className=" gap-4 text-black text-center">
                 <KanbanColumn
                     id="all"
-                    title="To Do"
+                    title="Активные проекты"
                     projects={projects}
                 />
             </div>
-
         </div>
     );
 }
