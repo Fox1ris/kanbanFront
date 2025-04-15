@@ -3,13 +3,13 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
+
 type KanbanItemProps = {
     id: string;
     title: string;
-    project: number;
 };
 
-export default function KanbanItem({ id, title, project }: KanbanItemProps) {
+export default function KanbanItem({ id, title }: KanbanItemProps) {
     const {
         attributes,
         listeners,

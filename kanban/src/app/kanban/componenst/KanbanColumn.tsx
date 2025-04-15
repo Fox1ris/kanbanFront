@@ -5,22 +5,24 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import KanbanItem from './KanbanItem';
 import { Task } from './KanbanBoard';
 
+
 type KanbanColumnProps = {
     id: string;
     title: string;
     tasks: Task[];
     isEmpty: boolean;
     project: number;
+
 };
 
-export default function KanbanColumn({ id, title, tasks, isEmpty }: KanbanColumnProps) {
+export default function KanbanColumn({ id, title, tasks, isEmpty, project}: KanbanColumnProps) {
     const { setNodeRef, isOver } = useDroppable({
         id,
         data: {
             type: 'column',
         },
     });
-
+    const projectID = tasks.filter((item) => item.project === project);
     return (
         <div
             ref={setNodeRef}
@@ -37,8 +39,8 @@ export default function KanbanColumn({ id, title, tasks, isEmpty }: KanbanColumn
                     strategy={verticalListSortingStrategy}
                 >
                     <div className="space-y-3">
-                        {tasks.map((task) => (
-                            <KanbanItem key={task.id} id={task.id} title={task.title} project={task.project} />
+                        {projectID.map((task) => (
+                            <KanbanItem key={task.id} id={task.id} title={task.title}/>
                         ))}
                     </div>
                 </SortableContext>

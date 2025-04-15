@@ -16,7 +16,6 @@ type Project = {
 
 export default function KanbanBoard() {
     const [projects, setProjects] = useState([]);
-
     const api = axios.create({
         baseURL: "http://127.0.0.1:8000/kanbandata/",  // Без слеша в конце!
     });

@@ -9,7 +9,6 @@ type KanbanColumnProps = {
     id: string;
     title: string;
     projects: Project[];
-    isEmpty: boolean;
 };
 
 export default function KanbanColumn({ id, title, projects}: KanbanColumnProps) {

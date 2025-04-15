@@ -4,9 +4,10 @@ import { useState, useRef, useEffect } from 'react';
 interface DropdownProps {
     onSelect: (selectedOption: string) => void;
     defaultLabel?: string;
+    selected: string;
 }
 
-const DropdownMenu = ({ selected, onSelect, defaultLabel = 'Select an option' }: DropdownProps) => {
+export default function DropdownMenu ({ selected, onSelect, defaultLabel = 'Select an option' }: DropdownProps)  {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,7 @@ const DropdownMenu = ({ selected, onSelect, defaultLabel = 'Select an option' }:
                     aria-labelledby="options-menu"
                 >
                     <div className="py-1" role="none">
-                        {Object.entries(selected).map(([selected]) =>
+                        {Object.entries(selected).map(([selected, items]) =>
                              (
                             <button
                                 key={selected}
@@ -66,7 +67,7 @@ const DropdownMenu = ({ selected, onSelect, defaultLabel = 'Select an option' }:
                                 role="menuitem"
                                 onClick={() => handleSelect(selected)}
                             >
-                                {selected}
+                                {items}
                             </button>
                         ))}
                     </div>
@@ -75,5 +76,3 @@ const DropdownMenu = ({ selected, onSelect, defaultLabel = 'Select an option' }:
         </div>
     );
 };
-
-export default DropdownMenu;
