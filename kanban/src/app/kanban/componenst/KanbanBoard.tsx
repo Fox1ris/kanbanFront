@@ -20,7 +20,7 @@ type Task = {
 };
 
 export default function KanbanBoard() {
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState<string[]>([]);
     const [newTaskTitle, setNewTaskTitle] = useState('');
     //const [newTaskDescription, setNewTaskDescription] = useState(''); //Надо сделать добавление описания задачи
     const projectID = Number(localStorage.getItem("project"));
