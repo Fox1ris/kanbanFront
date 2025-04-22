@@ -109,6 +109,7 @@ export default function KanbanBoard() {
 
         setTasks([...tasks, newTask]);
         setNewTaskTitle('');
+        location.reload()
     };
 
     const toProjects = () => redirect("/projectslist/");
