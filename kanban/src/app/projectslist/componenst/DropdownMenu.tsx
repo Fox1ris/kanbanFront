@@ -17,6 +17,7 @@ export default function DropdownMenu ({ selected, onSelect, defaultLabel = 'Sele
         setSelectedStatus(selected);
         onSelect(selected);
         setIsOpen(false);
+        localStorage.setItem("projectStatus", selected);
     };
 
     useEffect(() => {

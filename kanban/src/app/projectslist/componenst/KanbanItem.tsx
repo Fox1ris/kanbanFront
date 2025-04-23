@@ -41,7 +41,8 @@ export default function KanbanItem({id, title, status, description}: KanbanItemP
         const excludedArea = e.target.closest(".excluded-area");
 
         if (!excludedArea) {
-            localStorage.setItem("project", id, title);
+            localStorage.setItem("project", id);
+            localStorage.setItem("projectTitle", title);
             redirect("/kanban/");
         }
     };

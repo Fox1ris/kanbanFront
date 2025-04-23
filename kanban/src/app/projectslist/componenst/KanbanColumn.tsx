@@ -30,7 +30,12 @@ export default function KanbanColumn({ id, title, projects}: KanbanColumnProps) 
             {(
                     <div className="flex flex-wrap gap-[30px]">
                         {projects.map((project) => (
-                            <KanbanItem key={project.id} id={project.id} title={project.title} status={project.status} description={project.description} />
+                            <KanbanItem key={project.id}
+                                        id={project.id}
+                                        title={project.title}
+                                        status={project.status}
+                                        description={project.description}
+                                        />
                         ))}
                     </div>
             )}

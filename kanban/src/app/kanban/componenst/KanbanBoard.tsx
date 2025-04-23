@@ -10,7 +10,6 @@ import {redirect} from "next/navigation";
 import AddingTask from "@/app/kanban/componenst/AddingTask";
 
 
-
 type Task = {
     id: number;
     title: string;
@@ -22,8 +21,30 @@ type Task = {
 
 export default function KanbanBoard() {
     const [tasks, setTasks] = useState<string[]>([]);
-    //const [newTaskDescription, setNewTaskDescription] = useState(''); //Надо сделать добавление описания задачи
-    const projectID = Number(localStorage.getItem("project"));
+    const statusOptions = [
+        {id: 'active', label: 'Активен', colorClasses: 'bg-green-600'},
+        {id: 'completed', label: 'Завершен', colorClasses: 'bg-gray-600'},
+        {id: 'on_hold', label: 'На паузе', colorClasses: 'bg-yellow-600'},
+    ];
+
+    const getStatusColor = () => {
+        const status = statusOptions.find(s => s.id === projectStatus);
+        return status ? status.colorClasses : statusOptions[0].colorClasses;
+    };
+
+    const getStatusLabel = () => {
+        const label = statusOptions.find(s => s.id === projectStatus);
+        return label ? label.label : statusOptions[0].label;
+    };
+
+
+    const projectID = Number(localStorage.getItem("projectID"));
+    const projectTitle = String(localStorage.getItem("projectTitle"));
+    const projectStatus = String(localStorage.getItem("projectStatus"));
+
+    console.log(projectStatus);
+
+
     const toProjects = () => redirect("/projectslist/");
 
     const api = axios.create({
@@ -55,11 +76,11 @@ export default function KanbanBoard() {
                     task.id === active.id ? {...task, status: over.id as Task['status']} : task
                 )
             );
-                api.patch(`tasks/${activeTask.id}/`, {
-                    status: over.id
-                })
-                    .then(response => console.log("Статус успешно!", response))
-                    .catch(error => console.error("Ошибка:", error.response?.data || error.message));
+            api.patch(`tasks/${activeTask.id}/`, {
+                status: over.id
+            })
+                .then(response => console.log("Статус успешно!", response))
+                .catch(error => console.error("Ошибка:", error.response?.data || error.message));
             return;
         }
 
@@ -92,19 +113,29 @@ export default function KanbanBoard() {
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold italic">Канбан Доска</h1>
-                <AddingTask project={projectID}/>
+                <div className="flex justify-between items-center">
+                    <h1 className="text-2xl font-bold italic content-center">{projectTitle}</h1>
+                    <h1 className={`text-2xl font-bold italic w-40 h-10 ml-3 content-center text-center rounded-4xl ${getStatusColor(tasks.status)}`}>{getStatusLabel(status.label)}</h1>
+                </div>
+
+
+                <div className="flex justify-center items-center mr-40">
+                    <AddingTask project={projectID}/>
+                </div>
+
 
                 <div className="flex gap-6">
                     <button
                         className="flex bg-blue-500 hover:bg-blue-600 rounded px-4 py-2 justify-center gap-6 italic"
                         onClick={toProjects}
-                        >
-                    К проектам
+                    >
+                        К проектам
                     </button>
 
                 </div>
+
             </div>
+
 
             <DndContext collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-black italic">
