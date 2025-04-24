@@ -23,19 +23,34 @@ export default function KanbanItem({id, title, status, description}: KanbanItemP
         on_hold: ["На паузе"],
     });
 
+    const statusOptions = [
+        {id: 'active', label: 'Активен', colorClasses: 'bg-green-600'},
+        {id: 'completed', label: 'Завершен', colorClasses: 'bg-gray-600'},
+        {id: 'on_hold', label: 'На паузе', colorClasses: 'bg-yellow-600'},
+    ];
+
+
+    const getStatusLabel = () => {
+        const label = statusOptions.find(s => s.id === status);
+        return label ? label.label : statusOptions[0].label;
+    };
+
+    const statusLabel = getStatusLabel(status.label);
+
+
     const api = axios.create({
         baseURL: "http://127.0.0.1:8000/kanbandata/",  // Без слеша в конце!
     });
 
     const handleSelect = (select: string) => {
         setSelected(selected);
-        console.log(typeof select);
         api.patch(`projects/${id}/`, {
             status: select
         })
             .then(response => console.log("Статус успешно!", response))
             .catch(error => console.error("Ошибка:", error.response?.data || error.message));
     };
+
 
     const handleBlockClick = (e: any) => {
         const excludedArea = e.target.closest(".excluded-area");
@@ -77,7 +92,7 @@ export default function KanbanItem({id, title, status, description}: KanbanItemP
                     <DropdownMenu
                         selected={selected}
                         onSelect={handleSelect}
-                        defaultLabel={status}
+                        defaultLabel={statusLabel}
                     />
                 </div>
                 {description}

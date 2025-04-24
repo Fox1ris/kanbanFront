@@ -18,7 +18,7 @@ export default function KanbanColumn({ id, title, projects}: KanbanColumnProps) 
             type: 'column',
         },
     });
-
+    console.log("Board", projects);
     return (
         <div
             ref={setNodeRef}

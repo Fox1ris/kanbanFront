@@ -10,13 +10,25 @@ interface DropdownProps {
 export default function DropdownMenu ({ selected, onSelect, defaultLabel = 'Select an option' }: DropdownProps)  {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+    const statusOptions = [
+        {id: 'active', label: 'Активен', colorClasses: 'bg-green-600'},
+        {id: 'completed', label: 'Завершен', colorClasses: 'bg-gray-600'},
+        {id: 'on_hold', label: 'На паузе', colorClasses: 'bg-yellow-600'},
+    ];
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleSelect = (selected: string) => {
-        setSelectedStatus(selected);
+        const getStatusLabel = () => {
+            const label = statusOptions.find(s => s.id === selected);
+            return label ? label.label : statusOptions[0].label;
+        };
+        const statusLabel = getStatusLabel(status.label);
+
+        setSelectedStatus(statusLabel);
         onSelect(selected);
         setIsOpen(false);
+
         localStorage.setItem("projectStatus", selected);
     };
 

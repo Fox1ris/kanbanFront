@@ -26,6 +26,9 @@ export default function KanbanBoard() {
             .then(data => setProjects(data));
     },[]);
 
+
+
+
     const addProject = () => {
         if (!newProjectTitle.trim()) return;
 
