@@ -42,7 +42,6 @@ export default function KanbanBoard() {
     const projectTitle = String(localStorage.getItem("projectTitle"));
     const projectStatus = String(localStorage.getItem("projectStatus"));
 
-    console.log(projectStatus);
 
 
     const toProjects = () => redirect("/projectslist/");
