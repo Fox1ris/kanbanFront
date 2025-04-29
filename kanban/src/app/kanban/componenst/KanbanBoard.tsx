@@ -43,8 +43,9 @@ export default function KanbanBoard() {
     const projectStatus = String(localStorage.getItem("projectStatus"));
 
 
-
     const toProjects = () => redirect("/projectslist/");
+
+
 
     const api = axios.create({
         baseURL: "http://127.0.0.1:8000/kanbandata/",  // Без слеша в конце!

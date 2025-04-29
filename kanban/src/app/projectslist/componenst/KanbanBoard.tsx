@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import KanbanColumn from './KanbanColumn';
 import {PlusIcon} from '@heroicons/react/24/outline';
 import axios from "axios";
+import LoginMenu from "@/app/projectslist/componenst/authentication/LoginMenu";
 
 type Project = {
     id: number;
@@ -52,6 +53,7 @@ export default function KanbanBoard() {
     return (
         <div className="p-4">
             <div className="flex justify-between items-center mb-6">
+                <LoginMenu/>
                 <h1 className="text-2xl font-bold italic">Проекты</h1>
                 <div className="flex gap-2">
                     <input
