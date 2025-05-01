@@ -66,7 +66,7 @@ export default function KanbanBoard() {
 
         if (!over) return;
         // @ts-ignore
-        const activeTask = tasks.find((task) => task.id === active.id);
+        const activeTask: any = tasks.find((task) => task.id === active.id);
         if (!activeTask) return;
 
 

@@ -2,10 +2,10 @@ import {useEffect, useState} from "react";
 import Axios from "@/app/projectslist/componenst/api/Axios";
 
 
-export default function Login({register, open, login}) {
+export default function Login({open, login}) {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [users, setUsers] = useState([]);
+
     const submission = (data) => {
         Axios.post("login/", {
             username: username,
@@ -76,23 +76,7 @@ export default function Login({register, open, login}) {
                     Логин
                 </button>
 
-                <button
-                    onClick={submission}
-                    className="border-black rounded-lg bg-black w-40 text-white"
-                >
-                    Логин
-                </button>
 
-                <button
-                    onClick={() => {
-                        register(true);
-                        login();
-                    }}
-                    className="border-black rounded-lg bg-black ml-6 w-40  text-white"
-                >
-
-
-                </button>
             </div>
 
         </div>

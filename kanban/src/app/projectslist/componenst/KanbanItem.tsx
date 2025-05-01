@@ -4,8 +4,8 @@ import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {useState} from "react";
 import DropdownMenu from "./DropdownMenu";
-import axios from "axios";
 import {redirect} from "next/navigation";
+import Axios from "@/app/projectslist/componenst/api/Axios";
 
 type KanbanItemProps = {
     id: string;
@@ -37,14 +37,9 @@ export default function KanbanItem({id, title, status, description}: KanbanItemP
 
     const statusLabel = getStatusLabel(status.label);
 
-
-    const api = axios.create({
-        baseURL: "http://127.0.0.1:8000/kanbandata/",  // Без слеша в конце!
-    });
-
     const handleSelect = (select: string) => {
         setSelected(selected);
-        api.patch(`projects/${id}/`, {
+        Axios.patch(`projects/${id}/`, {
             status: select
         })
             .then(response => console.log("Статус успешно!", response))

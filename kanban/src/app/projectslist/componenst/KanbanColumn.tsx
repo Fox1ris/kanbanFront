@@ -9,6 +9,7 @@ type KanbanColumnProps = {
     id: string;
     title: string;
     projects: Project[];
+
 };
 
 export default function KanbanColumn({ id, title, projects}: KanbanColumnProps) {
@@ -26,7 +27,9 @@ export default function KanbanColumn({ id, title, projects}: KanbanColumnProps) 
                 isOver ? 'ring-2 ring-blue-500' : ''
             }`}
         >
-            <h2 className="text-xl font-semibold mb-4">{title}</h2>
+            <div className="flex justify-center">
+                <h2 className="text-xl font-semibold mb-4">{title}</h2>
+            </div>
             {(
                     <div className="flex flex-wrap gap-[30px]">
                         {projects.map((project) => (

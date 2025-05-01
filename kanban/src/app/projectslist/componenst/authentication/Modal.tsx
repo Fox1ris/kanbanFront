@@ -4,9 +4,8 @@ import {useState} from "react";
 
 export default function Modal({open, onClose, login}) {
     const [loginOpen, setLoginOpen] = useState(true);
-    const [registerOpen, setRegisterOpen] = useState(false);
     return (
-        <div onClick={() => {onClose(); setLoginOpen(true); setRegisterOpen(false)}}
+        <div onClick={() => {onClose(); setLoginOpen(true)}}
              className={`fixed inset-0 flex justify-center items-center transition-colors ${open ? "visible bg-black/50" : "invisible"}`}>
             <div
                 onClick={e => e.stopPropagation()}
@@ -17,7 +16,6 @@ export default function Modal({open, onClose, login}) {
                     <Login
                         login={setLoginOpen}
                         open={loginOpen}
-                        register={setRegisterOpen}
                     />
                 </div>
 
